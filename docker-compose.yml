@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+    api:
+        # image: thomas-oliver/nestjs-dockerized 
+        build:
+            dockerfile: Dockerfile
+            context: .
+        depends_on: 
+            - mysql
+        environment:
+            DATABASE_URL: mysql://root:@localhost:3306/apigate
+            NODE_ENV: development
+            JWT_SECRET: eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY0MDcxNjYwMiwiaWF0IjoxNjQwNzE2NjAyfQ.U8Lkffcq6qlerRlslNU1OUGmihqBanS5_-1iyKXZFSk
+            PORT: 9090
+        ports:
+            - "8082:9090"

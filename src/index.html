@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>KLR Store</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="description" content="KLR store description" />
+  <meta property="og:title" content="KLR title" />
+  <meta property="og:type" content="KLR type" />
+  <meta property="og:url" content="KLR url" />
+  <meta property="og:image" content="KLR image" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="./assets/imgs/theme/favicon.svg" />
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="./assets/css/plugins/animate.min.css" />
+  <link rel="stylesheet" href="./assets/css/main.css?v=4.0" />
+</head>
+<body>
+  <app-root></app-root>
+  <!-- Vendor JS
+  <script src="./assets/js/vendor/modernizr-3.6.0.min.js"></script>
+  <script src="./assets/js/vendor/jquery-3.6.0.min.js"></script>
+  <script src="./assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+  <script src="./assets/js/vendor/bootstrap.bundle.min.js"></script>
+  <script src="./assets/js/plugins/slick.js"></script>
+  <script src="./assets/js/plugins/jquery.syotimer.min.js"></script>
+  <script src="./assets/js/plugins/wow.js"></script>
+  <script src="./assets/js/plugins/perfect-scrollbar.js"></script>
+  <script src="./assets/js/plugins/magnific-popup.js"></script>
+  <script src="./assets/js/plugins/select2.min.js"></script>
+  <script src="./assets/js/plugins/waypoints.js"></script>
+  <script src="./assets/js/plugins/counterup.js"></script>
+  <script src="./assets/js/plugins/jquery.countdown.min.js"></script>
+  <script src="./assets/js/plugins/images-loaded.js"></script>
+  <script src="./assets/js/plugins/isotope.js"></script>
+  <script src="./assets/js/plugins/scrollup.js"></script>
+  <script src="./assets/js/plugins/jquery.vticker-min.js"></script>
+  <script src="./assets/js/plugins/jquery.theia.sticky.js"></script>
+  <script src="./assets/js/plugins/jquery.elevatezoom.js"></script>
+  <-- Template  JS --
+  <script src="./assets/js/main.js?v=4.0"></script>
+  <script src="./assets/js/shop.js?v=4.0"></script>
+  -->
+  <script src="assets/js/client.js" async defer></script>
+  <script type="text/javascript">
+    // Load a script from given `url`
+    const loadScript = function (url) {
+      const script = document.createElement('script');
+      script.src = url;
+      script.addEventListener('load', function () {
+        // The script is loaded completely
+      });
+      document.head.appendChild(script);
+    };
+    // Load an array of scripts in order
+    const loadScriptsInOrder = function (arrayOfJs) {
+      arrayOfJs.map(function (url) {
+        return loadScript(url);
+      });
+    };
+    loadScriptsInOrder([
+      '/assets/js/vendor/jquery-3.6.0.min.js',
+      '/assets/js/vendor/jquery-migrate-3.3.0.min.js',   
+      '/assets/js/vendor/modernizr-3.6.0.min.js',
+      '/assets/js/vendor/bootstrap.bundle.min.js',
+      '/assets/js/plugins/slick.js',
+      '/assets/js/plugins/jquery.syotimer.min.js',
+      '/assets/js/plugins/wow.js',
+      '/assets/js/plugins/perfect-scrollbar.js',
+      '/assets/js/plugins/magnific-popup.js',
+      '/assets/js/plugins/select2.min.js',
+      '/assets/js/plugins/waypoints.js',
+      '/assets/js/plugins/counterup.js',
+      '/assets/js/plugins/jquery.countdown.min.js',
+      '/assets/js/plugins/images-loaded.js',
+      '/assets/js/plugins/isotope.js',
+      '/assets/js/plugins/scrollup.js',
+      '/assets/js/plugins/jquery.vticker-min.js',
+      '/assets/js/plugins/jquery.theia.sticky.js',
+      '/assets/js/plugins/jquery.elevatezoom.js',
+      '/assets/js/main.js?v=4.0',
+      '/assets/js/shop.js?v=4.0']);
+  </script>
+</body>
+</html>

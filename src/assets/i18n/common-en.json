@@ -1,0 +1,10 @@
+{
+    "PASSWORDNOTMATCH": "password not match to confirm password",
+    "CLOSE": "close",
+    "USERNAMEPASSWORDINVALIDMESSAGE": "username or password can not be empty",
+    "INVALIDCREDENTIALS": "In-valid credentials",
+    "HELLO": "Hello",
+    "WELCOME": "Welcome to our application",
+    "login": "Login here",
+    "INVALIDDETAILS": "In valid details"
+}
