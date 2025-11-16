@@ -10,9 +10,10 @@ import { CommonBaseComponent } from 'src/app/shared/components/common-base/commo
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 declare let google: any;
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    standalone: false
 })
 export class RegisterComponent extends CommonBaseComponent implements OnInit, AfterViewInit {
   registerForm!: FormGroup;

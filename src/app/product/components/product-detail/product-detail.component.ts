@@ -3,9 +3,10 @@ import { CommonService } from 'src/app/shared/services/common/common.service';
 declare let $: any;
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss']
+    selector: 'app-product-detail',
+    templateUrl: './product-detail.component.html',
+    styleUrls: ['./product-detail.component.scss'],
+    standalone: false
 })
 export class ProductDetailComponent implements OnInit, AfterViewInit {
 

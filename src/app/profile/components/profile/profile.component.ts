@@ -4,9 +4,10 @@ import { AuthService } from 'src/app/auth/services/auth/auth.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
+    standalone: false
 })
 export class ProfileComponent {
   displayedColumns = ['position', 'name', 'weight', 'symbol'];

@@ -10,9 +10,10 @@ import { AuthService } from '../../services/auth/auth.service';
 import { AppConstants } from '../../../app.constants';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+    selector: 'app-forgot-password',
+    templateUrl: './forgot-password.component.html',
+    styleUrls: ['./forgot-password.component.scss'],
+    standalone: false
 })
 export class ForgotPasswordComponent extends CommonBaseComponent implements OnInit {
   forgotForm!: FormGroup;
