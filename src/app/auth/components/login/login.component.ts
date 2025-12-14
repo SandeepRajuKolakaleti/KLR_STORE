@@ -40,14 +40,14 @@ export class LoginComponent extends CommonBaseComponent implements OnInit {
     this.dialogRef.closeAll();
 	this.loginForm = this.formBuilder.group({
 		email: ['', Validators.required],
-		phonenumber: ['', Validators.required],
+		// phonenumber: ['', Validators.required],
 		password: ['', Validators.required],
 	});
 	this.commonService.removeLocalStorageValues();
 	let data = this.storageService.get('UserData');
 	if (data) {
 		this.loginForm.controls['email'].setValue(data.email);
-		this.loginForm.controls['phonenumber'].setValue(data.phonenumber);
+		// this.loginForm.controls['phonenumber'].setValue(data.phonenumber);
 		this.loginForm.controls['password'].setValue(data.password);
 	}
   }
@@ -58,7 +58,7 @@ export class LoginComponent extends CommonBaseComponent implements OnInit {
 	if(this.loginForm.controls['email'].value !== '' && this.loginForm.controls['password'].value !== '') {
 		const options = {
 			email: this.loginForm.controls['email'].value,
-			phonenumber: this.loginForm.controls['phonenumber'].value,
+			// phonenumber: this.loginForm.controls['phonenumber'].value,
 			password: this.loginForm.controls['password'].value
 		}
 		this.authService.loginApiToken(options).subscribe((response) => {

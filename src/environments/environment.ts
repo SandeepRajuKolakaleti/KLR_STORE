@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   api: {
-  	URL: 'http://klrapigateloadbalancer-1724370165.us-east-1.elb.amazonaws.com/'
+  	URL: 'http://localhost:9090/'
   }
 };
 

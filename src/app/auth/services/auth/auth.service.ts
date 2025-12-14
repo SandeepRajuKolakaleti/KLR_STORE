@@ -33,7 +33,7 @@ export class AuthService {
 		this.commonService.setAuthenticated(value)
 	}
 
-	loginApiToken(options: { email: any; phonenumber: any; password: any; }): Observable<any> {
+	loginApiToken(options: { email: string; password: string; }): Observable<any> {
 		return this.http.post(this.API_URL+ 'api/users/login', options).pipe(map(data => {
 			return data;
 		}));
