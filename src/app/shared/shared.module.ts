@@ -6,6 +6,7 @@ import { TranslateLanguageModule } from './services/translate-language/translate
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonBaseComponent } from './components/common-base/common-base.component';
+import { CategoriesModule } from '../categories/categories.module';
 const declarations: any[] | Type<any> = [CommonBaseComponent];
 const modules = [
   CommonModule,
@@ -14,7 +15,8 @@ const modules = [
   TranslateModule, 
   FormsModule,
   ReactiveFormsModule,
-  RouterModule
+  RouterModule,
+  CategoriesModule
 ];
 @NgModule({
   declarations: declarations,

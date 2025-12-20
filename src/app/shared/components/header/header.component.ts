@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../../../../app/auth/services/auth/auth.service';
 import { CommonService } from '../../services/common/common.service';
+import { CategoryService } from 'src/app/categories/services/category.service';
+import { SubCategoryService } from 'src/app/categories/services/sub-category.service';
 declare let $: any;
 
 @Component({
@@ -12,19 +14,68 @@ declare let $: any;
     standalone: false
 })
 export class HeaderComponent implements AfterViewInit {
-
+  categories: any;
+  firstCategories: any;
+  secoundCategories: any;
   isLoggedIn: Observable<boolean> | undefined = of(false);
   isUserLoggedIn: any = this.commonService.isUserLoggedIn;
-  constructor(public router: Router, private authService: AuthService, private commonService: CommonService) { }
+  selectedCategory = 0;
+  electornicsSubCategories: any;
+  gamesSubCategories: any;
+  accessoriesSubCateogires: any;
+  constructor(public router: Router, private authService: AuthService, private commonService: CommonService, 
+    private categoryService: CategoryService,
+    private subCategoryService: SubCategoryService) { }
 
   ngAfterViewInit(): void {
     this.authService.isUserLoggedIn$.subscribe((data) => {
       console.log('12345678', data)
       this.isLoggedIn = of(data);
+      this.getAllCategories();
     });
-    this.sidebarSearch();
-    this.mobileHeaderActive();
-    this.loadJqueryScript();
+  }
+
+  getAllCategories() {
+    this.categoryService.getAll().subscribe((response: any) => {
+        console.log(response.data)
+        this.categories = response.data;
+        this.firstCategories = response.data.slice(0, response.data.length/2);
+        this.secoundCategories = response.data.slice(response.data.length/2, response.data.length);
+        this.categories.map((category: any) => {
+          console.log(category);
+          if (category.Name === "Electronics") {
+            this.selectedCategory = category.Id;
+            this.subCategoryService.getSubCategoriesByCategoryId(this.selectedCategory).subscribe((subCatergory) => {
+              console.log(subCatergory);
+              this.electornicsSubCategories = subCatergory;
+            })
+          } else if (category.Name === "Games") {
+            this.selectedCategory = category.Id;
+            this.subCategoryService.getSubCategoriesByCategoryId(this.selectedCategory).subscribe((subCatergory) => {
+              console.log(subCatergory);
+              this.gamesSubCategories = subCatergory;
+            })
+          } else if (category.Name === "Accessories") {
+            this.selectedCategory = category.Id;
+            this.subCategoryService.getSubCategoriesByCategoryId(this.selectedCategory).subscribe((subCatergory) => {
+              console.log(subCatergory);
+              this.accessoriesSubCateogires = subCatergory;
+            })
+          }
+        })
+        setTimeout(() => {
+          this.sidebarSearch();
+          this.mobileHeaderActive();
+          this.loadJqueryScript();
+        }, 0);
+    });
+  }
+
+  navigateTo(subCategory: any) {
+    console.log(subCategory);
+    this.router.navigate(['product/list'],{
+      queryParams: subCategory,
+    })
   }
 
   loadJqueryScript() {
