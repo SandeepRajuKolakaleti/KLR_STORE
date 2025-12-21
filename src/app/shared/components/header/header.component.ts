@@ -37,12 +37,10 @@ export class HeaderComponent implements AfterViewInit {
 
   getAllCategories() {
     this.categoryService.getAll().subscribe((response: any) => {
-        console.log(response.data)
         this.categories = response.data;
         this.firstCategories = response.data.slice(0, response.data.length/2);
         this.secoundCategories = response.data.slice(response.data.length/2, response.data.length);
         this.categories.map((category: any) => {
-          console.log(category);
           if (category.Name === "Electronics") {
             this.selectedCategory = category.Id;
             this.subCategoryService.getSubCategoriesByCategoryId(this.selectedCategory).subscribe((subCatergory) => {
@@ -79,6 +77,13 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   loadJqueryScript() {
+
+    /*---------------------
+      Select active
+    --------------------- */
+    if ($(".select-active")) {
+      $(".select-active").select2();
+    }
     // console.log('deviceInfo', this.deviceInfo);
     /*--- categories-button-active-2 ----*/
     $(".categories-button-active-2").on("click", function (e: { preventDefault: () => void; }) {

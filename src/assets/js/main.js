@@ -46,29 +46,36 @@
             $(this).width(50);
         });
         var rangeSlider = document.getElementById("slider-range");
-        var moneyFormat = wNumb({
-            decimals: 0,
-            thousand: ",",
-            prefix: "$"
-        });
-        noUiSlider.create(rangeSlider, {
-            start: [500, 1000],
-            step: 1,
-            range: {
-                min: [0],
-                max: [2000]
-            },
-            format: moneyFormat,
-            connect: true
-        });
+        // if(wNumb)
+        // var moneyFormat = wNumb({
+        //     decimals: 0,
+        //     thousand: ",",
+        //     prefix: "$"
+        // });
+        if(rangeSlider.noUiSlider) {
+            rangeSlider.noUiSlider.create(rangeSlider, {
+                start: [500, 1000],
+                step: 1,
+                range: {
+                    min: [0],
+                    max: [2000]
+                },
+                format: {
+                    decimals: 0,
+                    thousand: ",",
+                    prefix: "$"
+                },
+                connect: true
+            });
 
-        // Set visual min and max values and also update value hidden form inputs
-        rangeSlider.noUiSlider.on("update", function (values, handle) {
-            document.getElementById("slider-range-value1").innerHTML = values[0];
-            document.getElementById("slider-range-value2").innerHTML = values[1];
-            document.getElementsByName("min-value").value = moneyFormat.from(values[0]);
-            document.getElementsByName("max-value").value = moneyFormat.from(values[1]);
-        });
+            // Set visual min and max values and also update value hidden form inputs
+            rangeSlider.noUiSlider.on("update", function (values, handle) {
+                document.getElementById("slider-range-value1").innerHTML = values[0];
+                document.getElementById("slider-range-value2").innerHTML = values[1];
+                document.getElementsByName("min-value").value = moneyFormat.from(values[0]);
+                document.getElementsByName("max-value").value = moneyFormat.from(values[1]);
+            });
+        }
     }
 
     /*Fix Bootstrap 5 tab & slick slider*/
@@ -348,11 +355,6 @@
             enabled: true
         }
     });
-
-    /*---------------------
-        Select active
-    --------------------- */
-    $(".select-active").select2();
 
     /*--- Checkout toggle function ----*/
     $(".checkout-click1").on("click", function (e) {

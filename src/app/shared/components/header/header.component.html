@@ -13,7 +13,7 @@
                         <form action="#">
                             <select class="select-active">
                                 <option>All Categories</option>
-                                @for (item of categories; track item.id; let index = $index) {
+                                @for (item of categories; track $index; let index = $index) {
                                     <option>{{item.Name}}</option>
                                 } @empty {
                                     <div>No category available.</div>
@@ -144,7 +144,7 @@
                         <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
                             <div class="d-flex categori-dropdown-inner">
                                 <ul>
-                                    @for (item of firstCategories; track item.id; let index = $index) {
+                                    @for (item of firstCategories; track $index; let index = $index) {
                                         <li>
                                             <a href="javascript: void(0)" (click)="navigateTo(item)"> <img [src]="item.ThumnailImage" alt="" />{{item.Name}}</a>
                                         </li>
@@ -153,7 +153,7 @@
                                     }
                                 </ul>
                                 <ul class="end">
-                                    @for (item of secoundCategories; track item.id; let index = $index) {
+                                    @for (item of secoundCategories; track $index; let index = $index) {
                                         <li>
                                             <a href="javascript: void(0)" (click)="navigateTo(item)"> <img [src]="item.ThumnailImage" alt="" />{{item.Name}}</a>
                                         </li>
@@ -195,12 +195,12 @@
                                 <li class="position-static">
                                     <a href="#">Mega menu <i class="fi-rs-angle-down"></i></a>
                                     <ul class="mega-menu">
-                                        @for (item of categories; track item.id; let index = $index) {
+                                        @for (item of categories; track $index; let index = $index) {
                                             @if(item.Name === "Electronics") {
                                                 <li class="sub-mega-menu sub-mega-menu-width-22">
                                                     <a class="menu-title" href="javascript:void(0)">Electronics</a>
                                                     <ul>
-                                                        @for (subCategory of electornicsSubCategories; track subCategory.id; let index = $index) {
+                                                        @for (subCategory of electornicsSubCategories; track $index; let index = $index) {
                                                             <li><a href="javascript:void(0)" (click)="navigateTo(subCategory)">{{subCategory.Name}}</a></li>
                                                         }
                                                     </ul>
@@ -210,7 +210,7 @@
                                                 <li class="sub-mega-menu sub-mega-menu-width-22">
                                                     <a class="menu-title" href="javascript:void(0)">Games</a>
                                                     <ul>
-                                                        @for (subCategory of gamesSubCategories; track subCategory.id; let index = $index) {
+                                                        @for (subCategory of gamesSubCategories; track $index; let index = $index) {
                                                             <li><a href="javascript:void(0)" (click)="navigateTo(subCategory)">{{subCategory.Name}}</a></li>
                                                         }
                                                     </ul>
@@ -220,7 +220,7 @@
                                                 <li class="sub-mega-menu sub-mega-menu-width-22">
                                                     <a class="menu-title" href="javascript:void(0)">Accessories</a>
                                                     <ul>
-                                                        @for (subCategory of accessoriesSubCateogires; track subCategory.id; let index = $index) {
+                                                        @for (subCategory of accessoriesSubCateogires; track $index; let index = $index) {
                                                             <li><a href="javascript:void(0)" (click)="navigateTo(subCategory)">{{subCategory.Name}}</a></li>
                                                         }
                                                     </ul>

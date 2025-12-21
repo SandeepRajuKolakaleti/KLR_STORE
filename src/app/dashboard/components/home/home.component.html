@@ -40,9 +40,9 @@
             <div class="title">
                 <h3>Featured Categories</h3>
                 <ul class="list-inline nav nav-tabs links">
-                    @for (item of categories; track item.id) {
+                    @for (item of categories; track $index) {
                         <div class="item">
-                            <li class="list-inline-item nav-item"><a class="nav-link" routerLink="../../product/list" href="javascript: void(0)">{{item.Name}}</a></li>
+                            <li class="list-inline-item nav-item"><a class="nav-link" (click)="navigateTo(item)" href="javascript: void(0)">{{item.Name}}</a></li>
                         </div>
                     } @empty {
                         <div>No category available.</div>
@@ -53,12 +53,12 @@
         </div>
         <div class="carausel-10-columns-cover position-relative">
             <div class="carausel-10-columns" id="carausel-10-columns">
-                 @for (item of categories; track item.id; let index = $index) {
-                    <div class="card-2 bg-{{9+index}} wow animate__animated animate__fadeInUp" data-wow-delay="0">
+                 @for (item of categories; track $index; let index = $index) {
+                    <div class="card-2 bg-{{9+index}} wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
                         <figure class="img-hover-scale overflow-hidden">
-                            <a href="javascript: void(0)"><img src="assets/imgs/shop/cat-13.png" alt="" /></a>
+                            <a href="javascript: void(0)" (click)="navigateTo(item)"><img src="assets/imgs/shop/cat-13.png" alt="" /></a>
                         </figure>
-                        <h6><a href="javascript: void(0)">{{item.Name}}</a></h6>
+                        <h6><a href="javascript: void(0)" (click)="navigateTo(item)">{{item.Name}}</a></h6>
                         <span>26 items</span>
                     </div>
                 } @empty {

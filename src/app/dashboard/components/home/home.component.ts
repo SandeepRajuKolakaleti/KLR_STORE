@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CategoryService } from 'src/app/categories/services/category.service';
 declare let $: any;
 
@@ -10,7 +11,7 @@ declare let $: any;
 })
 export class HomeComponent implements AfterViewInit {
     categories: any;
-    constructor(private categoryService: CategoryService) { }
+    constructor(private categoryService: CategoryService, private router: Router) { }
 
     ngAfterViewInit(): void {
         this.getAllCategories();
@@ -24,6 +25,13 @@ export class HomeComponent implements AfterViewInit {
                 this.loadJqueryScripts()
             }, 0);
         });
+    }
+
+    navigateTo(item: any) {
+        console.log(item);
+        this.router.navigate(['product/list'],{
+            queryParams: item,
+        })
     }
 
     loadJqueryScripts() {

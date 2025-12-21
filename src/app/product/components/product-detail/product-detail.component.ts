@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 declare let $: any;
 
@@ -9,10 +10,15 @@ declare let $: any;
     standalone: false
 })
 export class ProductDetailComponent implements OnInit, AfterViewInit {
-
-  constructor(private commonService: CommonService) { }
+    productDetail: any;
+  constructor(private commonService: CommonService, private router: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.router.queryParams.subscribe((params: any) => {
+      const product = params.product;
+      this.productDetail = JSON.parse(product);
+      console.log(product);
+    });
   }
   ngAfterViewInit() {
     this.commonService.loadScriptsInOrder([
