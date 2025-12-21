@@ -1,10 +1,10 @@
 <div class="account">
-    <mat-tab-group>
+    <mat-tab-group animationDuration="0ms" (selectedTabChange)="onTabChange($event)">
         <mat-tab> 
             <ng-template mat-tab-label>
                Dashboard
             </ng-template>
-            <div>
+            <div [@fadeInOut]="selectedIndex === 0 ? 'in' : 'out'">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="mb-0">Hello {{profile.name}}!</h3>
@@ -22,7 +22,7 @@
             <ng-template mat-tab-label>
                 Orders
             </ng-template>
-            <div>
+            <div [@fadeInOut]="selectedIndex === 1 ? 'in' : 'out'">
                 <div class="example-container mat-elevation-z8">
                     <mat-table #table [dataSource]="dataSource">
                   
@@ -63,7 +63,7 @@
             <ng-template mat-tab-label>
                 Track your order
             </ng-template>
-            <div class="card">
+            <div class="card" [@fadeInOut]="selectedIndex === 2 ? 'in' : 'out'">
                 <div class="card-header">
                     <h3 class="mb-0">Orders tracking</h3>
                 </div>
@@ -91,7 +91,7 @@
             <ng-template mat-tab-label>
                 My Address
             </ng-template>
-            <div class="my-address">
+            <div class="my-address" [@fadeInOut]="selectedIndex === 3 ? 'in' : 'out'">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card mb-3 mb-lg-0">
@@ -131,7 +131,7 @@
             <ng-template mat-tab-label>
                 Account details
             </ng-template>
-            <div class="card-body">
+            <div class="card-body" [@fadeInOut]="selectedIndex === 4 ? 'in' : 'out'">
                 <p>Already have an account? <a href="/login">Log in instead!</a></p>
                 <form method="post" name="enq">
                     <div class="row">
@@ -174,7 +174,7 @@
             <ng-template mat-tab-label>
                 <a (click)="logout()">Logout</a>
             </ng-template>
-            <p>Content for Tab 26</p>
+            <p [@fadeInOut]="selectedIndex === 5 ? 'in' : 'out'">Content for Tab 26</p>
         </mat-tab>
     </mat-tab-group>
 </div>

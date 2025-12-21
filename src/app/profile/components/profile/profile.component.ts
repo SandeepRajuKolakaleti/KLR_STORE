@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AuthService } from 'src/app/auth/services/auth/auth.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
@@ -7,7 +8,15 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],
-    standalone: false
+    standalone: false,
+    animations: [
+      trigger('fadeInOut', [
+        state('in', style({ opacity: 1 })),
+        state('out', style({ opacity: 0 })),
+        transition('out => in', [animate('1s ease-in')]),
+        transition('in => out', [animate('1s ease-out')])
+      ])
+    ]
 })
 export class ProfileComponent {
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
@@ -22,7 +31,8 @@ export class ProfileComponent {
     {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'}
   ];
   dataSource = this.ELEMENT_DATA;
-  
+  selectedIndex = 0;
+
   constructor(private router: Router, private authService: AuthService, private storageService: StorageService) {}
 
   ngOnInit() {
@@ -33,6 +43,9 @@ export class ProfileComponent {
     this.router.navigate(['/login'])
   }
 
+  onTabChange(event: any) {
+    this.selectedIndex = event.index;
+  }
   getUserInformation() {
     const accessToken = this.storageService.get('ApiToken');
     this.authService.getUserInformation(accessToken.id).subscribe((response)=> {
