@@ -11,7 +11,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 })
 export class ProfileComponent {
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
-
+  profile: any;
   ELEMENT_DATA = [
     {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
     {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
@@ -37,6 +37,7 @@ export class ProfileComponent {
     const accessToken = this.storageService.get('ApiToken');
     this.authService.getUserInformation(accessToken.id).subscribe((response)=> {
       console.log(response);
+      this.profile = response;
     }, (error) => {
       console.log(error);
     });

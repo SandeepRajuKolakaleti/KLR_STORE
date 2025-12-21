@@ -46,14 +46,14 @@ export class AuthService {
 	}
 
 	getUserInformation(id: number) {
-		const CrApiSessionStorage = this.storageService.get('ApiSession');
+		const CrApiSessionStorage = this.storageService.get('ApiToken');
 		return this.http.get(this.API_URL+ 'api/users/profile/'+id, {
 			headers: this.getAuthorizationHeaders(CrApiSessionStorage),
 		});
 	}
 
 	resetPassword(options: any) {
-		const CrApiSessionStorage = this.storageService.get('ApiSession');
+		const CrApiSessionStorage = this.storageService.get('ApiToken');
 		return this.http.post(this.API_URL + 'api/users/resetPassword', options, {
 		  headers: this.getAuthorizationHeaders(CrApiSessionStorage),
 		}).pipe(map((response: any) => {
@@ -69,7 +69,7 @@ export class AuthService {
 			Authorization: '',
 		};
 		if (data && data !== '') {
-			headers.Authorization = data.token_type + ' ' + data.access_token;
+			headers.Authorization = 'Bearer ' + data.access_token_local;
 		}
 		return headers;
 	}

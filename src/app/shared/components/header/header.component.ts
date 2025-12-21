@@ -69,6 +69,22 @@ export class HeaderComponent implements AfterViewInit {
     });
   }
 
+  navigateToCompare() {
+    this.router.navigate(['product/compare']);
+  }
+
+  navigateToCheckout() {
+    this.router.navigate(['product/checkout']);
+  }
+
+  navigateToAddToCart() {
+    this.router.navigate(['product/add-to-cart']);
+  }
+
+  navigateToWishList() {
+    this.router.navigate(['product/wish-list']);
+  }
+
   navigateTo(subCategory: any) {
     console.log(subCategory);
     this.router.navigate(['product/list'],{
