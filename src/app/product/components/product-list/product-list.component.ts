@@ -28,7 +28,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
       this.categoryName = params.Name;
       if (catergoryId) {
         const subCatergoryId = params.Id
-        this.productService.getProductsByCategoryId(catergoryId, subCatergoryId).subscribe((response: any) => {
+        this.productService.getProductsByCategoryId(catergoryId, subCatergoryId, '').subscribe((response: any) => {
           console.log(response);
           this.responseData = response;
           this.products = response.data;
@@ -48,7 +48,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
       } else {
         const idParam = params.Id;
         if (idParam) {
-          this.productService.getProductsByCategoryId(idParam, '').subscribe((response: any) => {
+          this.productService.getProductsByCategoryId(idParam, '', '').subscribe((response: any) => {
             console.log(response);
             this.responseData = response;
             this.products = response.data;
@@ -86,6 +86,15 @@ export class ProductListComponent implements OnInit, AfterViewInit {
       );
     });
     return forkJoin(imageObservables); 
+  }
+
+  closeModal() {
+    setTimeout(() => {
+      $(".modal-backdrop.fade.show").not(":first").remove();
+      $('#quickViewModal').modal('hide');
+      $(".zoomContainer").remove();
+      $('body').css('padding', '0px');
+    }, 500);
   }
 
   openProductDetails(product: any) {

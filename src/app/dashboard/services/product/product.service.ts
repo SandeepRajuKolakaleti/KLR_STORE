@@ -21,10 +21,11 @@ export class ProductService {
     }
   }
 
-  getProductsByCategoryId(id: string, subCatergoryId: string, offset: number = 0, limit: number = 10) {
+  getProductsByCategoryId(id: string, subCatergoryId: string, brandId: string, offset: number = 0, limit: number = 10) {
     let options: any = {
       category: id,
       subCategory: subCatergoryId,
+      brand: brandId,
       offset: offset,
       limit: limit
     };
