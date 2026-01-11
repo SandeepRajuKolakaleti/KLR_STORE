@@ -2,9 +2,10 @@ import { computed, Injectable, signal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { AbstractControl, FormArray, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Subject } from 'rxjs';
 import { AppConstants } from '../../../app.constants';
 import { StorageService } from '../storage/storage.service';
+import { ProductService } from '../../../../app/dashboard/services/product/product.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class CommonService {
 
   constructor(private storageService: StorageService,
     private translateService: TranslateService,
-    private snackbar: MatSnackBar) { }
+    private snackbar: MatSnackBar,
+    private productService: ProductService) { }
 
   get isUserLoggedIn() {
     return computed(() => (this.isLoggedIn() ? AppConstants.user.loggedIn : AppConstants.user.loggedOut));
@@ -296,6 +298,21 @@ export class CommonService {
     return list.filter((item) => {
       return item.Id.toString().indexOf(value) > -1 || item.Name.indexOf(value) > -1;
     });
+  }
+
+  processImgToBase64(data: any) {
+    const imageObservables = data.map((product: {
+      ThumnailImagePath: string; ThumnailImage: string 
+    }) => {
+      return this.productService.getImageBase64({ url: product.ThumnailImage }).pipe(
+        map((response: any) => {
+          product.ThumnailImagePath = product.ThumnailImage;
+          product.ThumnailImage = response? response.img: '';
+          return product;
+        })
+      );
+    });
+    return forkJoin(imageObservables); 
   }
 
 }

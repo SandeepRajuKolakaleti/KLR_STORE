@@ -6,5 +6,9 @@
     "HELLO": "Hello",
     "WELCOME": "Welcome to our application",
     "login": "Login here",
-    "INVALIDDETAILS": "In valid details"
+    "INVALIDDETAILS": "In valid details",
+    "ADDEDTOWISHLIST": "Product added to your wishlist",
+    "ADDEDTOCART": "Product added to your cart",
+    "REMOVEDFROMWISHLIST": "Product removed from your wishlist",
+    "CARTCLEARED": "Cart has been cleared"
 }

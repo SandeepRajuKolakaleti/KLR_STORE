@@ -35,6 +35,13 @@ export class ProductService {
     });
   }
 
+  getProductsByIds(ids: string[]) {
+    return this.http.get(environment.api.URL+`api/products/product/get-by-ids`, {
+      headers: this.getHeaders(),
+      params: { ids: ids.toString() }
+    });
+  }
+
   getImageBase64(payload: any) {
     const url = environment.api.URL+ 'api/products/uploadImgToBase64';
     return this.http.post(url, payload, {

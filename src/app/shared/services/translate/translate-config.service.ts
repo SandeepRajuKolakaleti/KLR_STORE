@@ -14,7 +14,13 @@ export class TranslateConfigService {
 
     constructor(private translateService: TranslateService,
                 private storageService: StorageService) {
-        translateService.addLangs(['en', 'de']);
+        // Set default language
+        this.translateService.setDefaultLang('en');
+
+        // Get browser language (optional)
+        const browserLang = this.translateService.getBrowserLang();
+        this.translateService.use(browserLang?.match(/en|fr|es/) ? browserLang : 'en');
+        translateService.addLangs(['en', 'fr']);
     }
 
     get getSelectedLanguage() {

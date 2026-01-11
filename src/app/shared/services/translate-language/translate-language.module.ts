@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { forkJoin, map } from 'rxjs';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // AoT requires an exported function for factories
 export class MultiHttpLoader implements TranslateLoader {
@@ -15,17 +16,19 @@ export class MultiHttpLoader implements TranslateLoader {
       this.http.get(`/assets/i18n/menu-${lang}.json`),
       this.http.get(`/assets/i18n/errors-${lang}.json`)
     ]).pipe(
-      map(([common, menu, errors]) => ({ ...common, ...menu, ...errors }))
+      map(([common, menu, errors]) => { 
+        console.log(common, menu, errors);
+        return {...common, ...menu, ...errors}
+      })
     );
   }
 }
 
-// AoT requires an exported function for factories
 // export function HttpLoaderFactory(http: HttpClient) {
-//   return new TranslateHttpLoader(http);
+//   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 // }
-@NgModule({ 
-  declarations: [],
+
+@NgModule({ declarations: [],
   exports: [
       TranslateModule
   ], 
@@ -38,6 +41,6 @@ export class MultiHttpLoader implements TranslateLoader {
           deps: [HttpClient]
       }
   })], 
-  providers: [provideHttpClient(withInterceptorsFromDi())]
+  providers: [provideHttpClient(withInterceptorsFromDi())] 
 })
 export class TranslateLanguageModule { }

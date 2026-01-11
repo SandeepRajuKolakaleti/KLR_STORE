@@ -11,8 +11,8 @@ const declarations: any[] | Type<any> = [CommonBaseComponent];
 const modules = [
   CommonModule,
   MaterialModule,
+  TranslateModule,
   TranslateLanguageModule,
-  TranslateModule, 
   FormsModule,
   ReactiveFormsModule,
   RouterModule,
