@@ -48,7 +48,6 @@ export class AddToCartComponent extends CommonBaseComponent implements OnInit {
     this.addToCartService.getCartItems().subscribe((response: any) => {
       console.log("Cart items loaded", response);
       this.getProductsByIds(response);
-      // this.cartItems.set(this.addToCartItems);
     });
   }
 

@@ -1,0 +1,23 @@
+.payment-img {
+    width: 60px;
+    height: auto;
+    cursor: pointer;
+    border: 2px solid transparent;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.payment-img:hover {
+    transform: scale(1.05);
+}
+
+.payment-img.active {
+    border-color: #3bb77e;
+    background-color: #f3fff9;
+}
+.payment-options {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+}

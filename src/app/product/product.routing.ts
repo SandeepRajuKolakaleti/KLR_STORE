@@ -6,6 +6,7 @@ import { WishListComponent } from './components/wish-list/wish-list.component';
 import { AddToCartComponent } from './components/add-to-cart/add-to-cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { CompareProductsComponent } from './components/compare-products/compare-products.component';
+import { AuthGuard } from '../auth/services/auth-guard/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -15,21 +16,27 @@ const routes: Routes = [
   }, {
     path: 'list',
     component: ProductListComponent,
+    canActivate: [AuthGuard]
   }, {
     path: 'detail',
     component: ProductDetailComponent,
+    canActivate: [AuthGuard]
   }, {
     path: 'wish-list',
     component: WishListComponent,
+    canActivate: [AuthGuard]
   }, {
     path: 'add-to-cart',
     component: AddToCartComponent,
+    canActivate: [AuthGuard]
   }, {
     path: 'checkout',
     component: CheckoutComponent,
+    canActivate: [AuthGuard]
   }, {
     path: 'compare',
     component: CompareProductsComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

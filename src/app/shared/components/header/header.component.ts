@@ -28,6 +28,8 @@ export class HeaderComponent implements AfterViewInit {
     private subCategoryService: SubCategoryService) { }
 
   ngAfterViewInit(): void {
+    const isApiToken = localStorage.getItem('ApiToken');
+    this.commonService.setAuthenticated(!!isApiToken);
     this.authService.isUserLoggedIn$.subscribe((data) => {
       console.log('12345678', data)
       this.isLoggedIn = of(data);
