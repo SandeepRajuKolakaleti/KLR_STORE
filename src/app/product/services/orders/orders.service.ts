@@ -1,11 +1,11 @@
-// payment.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from '../../../../environments/environment';
 
-@Injectable({ providedIn: 'root' })
-export class PaymentService {
-
+@Injectable({
+  providedIn: 'root',
+})
+export class OrdersService {
   constructor(private http: HttpClient) {}
   getHeaders(): any {
     const apiToken = localStorage.getItem('ApiToken');
@@ -19,14 +19,14 @@ export class PaymentService {
     }
   }
 
-  createOrder(gateway: string, amount: number) {
-     return this.http.post<any>(environment.api.URL+`api/payment/create-order`, { gateway: gateway, amount: amount }, {
+  createOrder(payload: any) {
+     return this.http.post<any>(environment.api.URL+`api/orders/create-order`, payload, {
       headers: this.getHeaders(),
     });
   }
 
-  verifyPayment(gateway: string, payload: any) {
-    return this.http.post(environment.api.URL+`api/payment/verify`, { gateway: gateway, payload: payload }, {
+  updateOrder(payload: any) {
+    return this.http.post(environment.api.URL+`api/orders/update-order`, payload, {
       headers: this.getHeaders(),
     });
   }

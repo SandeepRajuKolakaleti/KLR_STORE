@@ -6,6 +6,8 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { WishListService } from './services/wish-list/wish-list.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PaymentService } from './services/payments/payments.service';
+import { OrdersService } from './services/orders/orders.service';
 
 
 
@@ -18,6 +20,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [WishListService]
+  providers: [WishListService, PaymentService, OrdersService]
 })
 export class ProductModule { }

@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   api: {
-  	URL: 'http://localhost:9090/'
+  	URL: 'http://localhost:9090/',
+    razorPayKey: 'rzp_test_S2xGhnZlqNr2mL'
   }
 };
 

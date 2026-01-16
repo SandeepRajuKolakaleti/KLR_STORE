@@ -221,11 +221,18 @@
                 <div class="payment-logo d-flex gap-3 mt-20">
 
                     <img
+                        src="assets/imgs/theme/icons/razorpay-logo.png"
+                        alt="Razorpay"
+                        class="payment-img"
+                        [class.active]="paymentMethod === 'online' && paymentVia === appConstants.paymentVia.razorpay"
+                        (click)="selectPayment('online', appConstants.paymentVia.razorpay)">
+
+                    <img
                         src="assets/imgs/theme/icons/payment-paypal.svg"
                         alt="PayPal"
                         class="payment-img"
-                        [class.active]="paymentMethod === 'online'"
-                        (click)="selectPayment('online')">
+                        [class.active]="paymentMethod === 'online' && paymentVia === appConstants.paymentVia.paypal"
+                        (click)="selectPayment('online', appConstants.paymentVia.paypal)">
                     <!-- 
                     <img
                         src="assets/imgs/theme/icons/payment-zapper.svg"
@@ -235,6 +242,7 @@
                         (click)="selectPayment('bank')"> -->
 
                 </div>
+                <div id="paypal-button"></div>
                 <button type="submit" [disabled]="checkoutForm.invalid" (click)="placeOrder()" class="btn btn-fill-out btn-block mt-30">Place an Order<i class="fi-rs-sign-out ml-15"></i></button>
             </div>
         </div>

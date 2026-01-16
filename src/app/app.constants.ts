@@ -11,6 +11,26 @@ export class AppConstants {
     de: 'de'
   };
 
+  public static paymentVia = {
+    razorpay: 'razorpay',
+    paypal: 'paypal'
+  };
+
+  public static KLRStore = {
+    name: 'KLR Store',
+    online: 'online',
+    description: 'KLR Store - Online Shopping Platform "Order Payment"'
+  };
+
+  public static orderStatus = {
+    pending: 'Pending',
+    processing: 'Processing',
+    shipped: 'Shipped',
+    delivered: 'Delivered',
+    cancelled: 'Cancelled',
+    refunded: 'Refunded'
+  };
+
   public static nameOrId = {
     GetId: 'getId',
     GetName: 'getName'
