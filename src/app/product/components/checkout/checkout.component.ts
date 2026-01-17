@@ -109,11 +109,11 @@ export class CheckoutComponent implements OnInit {
     }
     // store this.checkoutForm in backend then initiate payment
     let items: { Id: number; ProductId: number; Quantity: number; UnitPrice: number; }[] = [], index = 0;
-    this.cartItems().forEach(item => {
+    this.cartItems().forEach((item: CartItem) => {
       index++;
       items.push({
         Id: index,
-        ProductId: item.id,
+        ProductId: item.productId,
         Quantity: item.quantity,
         UnitPrice: Number(item.price)
       });

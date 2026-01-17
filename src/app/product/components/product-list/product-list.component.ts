@@ -158,7 +158,7 @@ export class ProductListComponent extends CommonBaseComponent implements OnInit,
     this.addToCartService.addToCart(product.Id, product.quantity).subscribe((response) => {
       console.log("Added to cart", response);
       this.snackBar.open(this.translateService.instant('ADDEDTOCART'), this.translateService.instant('CLOSE'), AppConstants.SNACK_BAR_DELAY);
-      this.router.navigate(['product/add-to-cart']);
+      // this.router.navigate(['product/add-to-cart']);
     }, (error) => {
       console.log("Error adding to cart", error);
     });
