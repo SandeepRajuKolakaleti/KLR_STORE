@@ -10,6 +10,7 @@ import { AppConstants } from '../../../../app/app.constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonService } from 'src/app/shared/services/common/common.service';
 import { ProductService } from 'src/app/dashboard/services/product/product.service';
+import { CartStore } from 'src/app/shared/services/cart/cart.store.service';
 
 @Component({
   selector: 'app-add-to-cart',
@@ -35,6 +36,7 @@ export class AddToCartComponent extends CommonBaseComponent implements OnInit {
     protected override translateConfigService: TranslateConfigService,
     private commonService: CommonService,
     private productService: ProductService,
+    private cartStore: CartStore,
     private snackBar: MatSnackBar,) {
     super(translateConfigService, translateService, storageService);
     super.ngOnInit();
@@ -76,6 +78,7 @@ export class AddToCartComponent extends CommonBaseComponent implements OnInit {
         ...item
       }));
       this.cartItems.set(this.addToCartItems);
+      this.cartStore.set(this.addToCartItems.length);
     });
   }
 

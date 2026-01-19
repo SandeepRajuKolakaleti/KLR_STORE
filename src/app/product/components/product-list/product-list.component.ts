@@ -11,6 +11,8 @@ import { AddToCartService } from '../../services/add-to-cart/add-to-cart.service
 import { CommonBaseComponent } from '../../../../app/shared/components/common-base/common-base.component';
 import { StorageService } from '../../../../app/shared/services/storage/storage.service';
 import { TranslateConfigService } from '../../../../app/shared/services/translate/translate-config.service';
+import { CartStore } from '../../../../app/shared/services/cart/cart.store.service';
+import { WishListStore } from 'src/app/shared/services/wish-list/wish-list.store.service';
 declare let $: any;
 
 @Component({
@@ -28,7 +30,9 @@ export class ProductListComponent extends CommonBaseComponent implements OnInit,
     private router: Router, private wishListService: WishListService, protected override translateService: TranslateService,
     protected override storageService: StorageService, 
     protected override translateConfigService: TranslateConfigService,
-    private snackBar: MatSnackBar, private addToCartService: AddToCartService
+    private snackBar: MatSnackBar, private addToCartService: AddToCartService,
+    private cartStore: CartStore,
+    private wishListStore: WishListStore
   ) {
     super(translateConfigService, translateService, storageService);
     super.ngOnInit();
@@ -143,6 +147,7 @@ export class ProductListComponent extends CommonBaseComponent implements OnInit,
     console.log("Add to wishlist", product);
     this.wishListService.addToWishList(product.Id).subscribe((response) => {
       console.log("Added to wishlist", response);
+      this.wishListStore.increase(1);
       this.snackBar.open(this.translateService.instant('ADDEDTOWISHLIST'), this.translateService.instant('CLOSE'), AppConstants.SNACK_BAR_DELAY);
     }, (error) => {
       console.log("Error adding to wishlist", error);
@@ -157,6 +162,7 @@ export class ProductListComponent extends CommonBaseComponent implements OnInit,
     }
     this.addToCartService.addToCart(product.Id, product.quantity).subscribe((response) => {
       console.log("Added to cart", response);
+      this.cartStore.increase(product.quantity);
       this.snackBar.open(this.translateService.instant('ADDEDTOCART'), this.translateService.instant('CLOSE'), AppConstants.SNACK_BAR_DELAY);
       // this.router.navigate(['product/add-to-cart']);
     }, (error) => {

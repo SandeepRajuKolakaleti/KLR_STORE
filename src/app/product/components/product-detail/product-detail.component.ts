@@ -1,6 +1,16 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common/common.service';
+import { AddToCartService } from '../../services/add-to-cart/add-to-cart.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
+import { StorageService } from '../../../../app/shared/services/storage/storage.service';
+import { TranslateConfigService } from '../../../../app/shared/services/translate/translate-config.service';
+import { CommonBaseComponent } from '../../../../app/shared/components/common-base/common-base.component';
+import { CartStore } from 'src/app/shared/services/cart/cart.store.service';
+import { AppConstants } from 'src/app/app.constants';
+import { WishListService } from '../../services/wish-list/wish-list.service';
+import { WishListStore } from '../../../shared/services/wish-list/wish-list.store.service';
 declare let $: any;
 
 @Component({
@@ -9,17 +19,54 @@ declare let $: any;
     styleUrls: ['./product-detail.component.scss'],
     standalone: false
 })
-export class ProductDetailComponent implements OnInit, AfterViewInit {
+export class ProductDetailComponent extends CommonBaseComponent implements OnInit, AfterViewInit {
     productDetail: any;
-  constructor(private commonService: CommonService, private router: ActivatedRoute) { }
+  constructor(private commonService: CommonService, private router: ActivatedRoute, private addToCartService: AddToCartService,
+      protected override translateService: TranslateService,
+      protected override storageService: StorageService, 
+      protected override translateConfigService: TranslateConfigService,
+    private snackBar: MatSnackBar, private cartStore: CartStore, private wishListService: WishListService,
+    private wishListStore: WishListStore
+  ) { 
+    super(translateConfigService, translateService, storageService);
+    super.ngOnInit();
+  }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.router.queryParams.subscribe((params: any) => {
       const product = params.product;
       this.productDetail = JSON.parse(product);
       console.log(product);
     });
   }
+
+  addToWishList(product: any) {
+    console.log("Add to wishlist", product);
+    this.wishListService.addToWishList(product.Id).subscribe((response) => {
+      console.log("Added to wishlist", response);
+      this.wishListStore.increase(1);
+      this.snackBar.open(this.translateService.instant('ADDEDTOWISHLIST'), this.translateService.instant('CLOSE'), AppConstants.SNACK_BAR_DELAY);
+    }, (error) => {
+      console.log("Error adding to wishlist", error);
+    });
+  }
+
+  addToCart(productDetail: any) {
+    console.log("Add to cart", productDetail);
+    const product = {
+      ...productDetail,
+      quantity: productDetail.quantity ? productDetail.Quantity : 1
+    }
+    this.addToCartService.addToCart(product.Id, product.quantity).subscribe((response) => {
+      console.log("Added to cart", response);
+      this.cartStore.increase(product.quantity);
+      this.snackBar.open(this.translateService.instant('ADDEDTOCART'), this.translateService.instant('CLOSE'), AppConstants.SNACK_BAR_DELAY);
+      // this.router.navigate(['product/add-to-cart']);
+    }, (error) => {
+      console.log("Error adding to cart", error);
+    });
+  }
+
   ngAfterViewInit() {
     this.commonService.loadScriptsInOrder([
         "assets/js/vendor/modernizr-3.6.0.min.js",

@@ -10,6 +10,7 @@ import { environment } from '../../../../environments/environment';
 import { OrdersService } from '../../services/orders/orders.service';
 import { A } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 declare let $: any;
 declare var Razorpay: any;
 export {};
@@ -40,7 +41,7 @@ export class CheckoutComponent implements OnInit {
   );
   
   constructor(private addToCartService: AddToCartService, private productService: ProductService, private commonService: CommonService, private fb: FormBuilder, private paymentService: PaymentService,
-    private orderService: OrdersService, private snackBar: MatSnackBar
+    private orderService: OrdersService, private snackBar: MatSnackBar, private router: Router
   ) {}
 
   ngOnInit() {
@@ -238,6 +239,7 @@ export class CheckoutComponent implements OnInit {
               this.orderService.updateOrder(updatePayload).subscribe((updateRes: any) => {
                 console.log("Order updated successfully after payment", updateRes);
                 this.snackBar.open('Payment Successful and Order Updated', 'Close', { duration: AppConstants.SNACK_BAR_DELAY.duration });
+                this.router.navigate(['profile']);
               });
             } else {
               alert('Payment Failed');
@@ -274,6 +276,7 @@ export class CheckoutComponent implements OnInit {
           this.orderService.updateOrder(updatePayload).subscribe((updateRes: any) => {
             console.log("Order updated successfully after payment", updateRes);
             this.snackBar.open('Payment Successful and Order Updated', 'Close', { duration: AppConstants.SNACK_BAR_DELAY.duration });
+            this.router.navigate(['profile']);
           });
         },
         onError: (err: any) => {

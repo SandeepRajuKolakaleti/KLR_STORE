@@ -1,8 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AuthService } from 'src/app/auth/services/auth/auth.service';
-import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { AuthService } from '../../../../app/auth/services/auth/auth.service';
+import { StorageService } from '../../../../app/shared/services/storage/storage.service';
+import { OrdersService } from '../../../../app/product/services/orders/orders.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
     selector: 'app-profile',
@@ -19,24 +24,26 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
     ]
 })
 export class ProfileComponent {
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
+  totalProducts: number = 0;
+  displayedColumns = ['orderId', 'date', 'status', 'total', 'transactionId'];
   profile: any;
-  ELEMENT_DATA = [
-    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'}
-  ];
-  dataSource = this.ELEMENT_DATA;
+  ELEMENT_DATA = [];
+  dataSource = new MatTableDataSource<any>(this.ELEMENT_DATA);
   selectedIndex = 0;
+  selection = new SelectionModel<any>(true, []);
+  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
+    this.dataSource.paginator = paginator;
+  };
+  offset: number = 0;
+  limit: number = 10;
 
-  constructor(private router: Router, private authService: AuthService, private storageService: StorageService) {}
+  constructor(private router: Router, private authService: AuthService, private storageService: StorageService, private ordersService: OrdersService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.getUserInformation();
+    this.loadUserOrders(this.offset, this.limit);
   }
   logout() {
     this.authService.setAuthenticated(false);
@@ -54,5 +61,34 @@ export class ProfileComponent {
     }, (error) => {
       console.log(error);
     });
+  }
+  loadUserOrders(offset: number, limit: number) {
+    this.ordersService.getUserOrders(offset, limit).subscribe((response: any) => {
+      console.log(response);
+      this.totalProducts = response.total;
+      this.dataSource = new MatTableDataSource<any>(response.data);
+      this.dataSource.paginator = this.matPaginator;
+    });
+  }
+
+  //  delete(element: any, event: any) {
+  //   event.preventDefault();
+  //   event.stopPropagation();
+  //   console.log(element);
+  //   this.ordersService.delete(element.Id).subscribe((data) => {
+  //     if (data) {
+  //       this.loadUserOrders(this.offset, this.limit);
+  //       this.snackBar.open('order deleted successfully!', 'Close', {
+  //         duration: 3000,
+  //         panelClass: ['snackbar-success']
+  //       });
+  //     }
+  //   });
+  // }
+
+  pageChanged(event: any) {
+    this.limit = event.pageSize;
+    this.offset = event.pageIndex * event.pageSize;
+    this.loadUserOrders(this.offset, this.limit);
   }
 }

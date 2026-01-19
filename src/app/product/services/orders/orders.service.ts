@@ -30,4 +30,16 @@ export class OrdersService {
       headers: this.getHeaders(),
     });
   }
+
+  getUserOrders(offset: number, limit: number) {
+    return this.http.get<any>(environment.api.URL+`api/orders/getAll?offset=${offset}&limit=${limit}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  delete(orderId: number) {
+    return this.http.delete<any>(environment.api.URL+`api/orders/delete/${orderId}`, {
+      headers: this.getHeaders(),
+    });
+  }
 }

@@ -8,7 +8,8 @@ import { CommonBaseComponent } from '../../../../app/shared/components/common-ba
 import { StorageService } from '../../../../app/shared/services/storage/storage.service';
 import { TranslateConfigService } from '../../../../app/shared/services/translate/translate-config.service';
 import { CommonService } from '../../../../app/shared/services/common/common.service';
-import { ProductService } from 'src/app/dashboard/services/product/product.service';
+import { ProductService } from '../../../../app/dashboard/services/product/product.service';
+import { WishListStore } from '../../../shared/services/wish-list/wish-list.store.service';
 
 @Component({
   selector: 'app-wish-list',
@@ -24,7 +25,8 @@ export class WishListComponent extends CommonBaseComponent implements OnInit {
     protected override storageService: StorageService, 
     protected override translateConfigService: TranslateConfigService,
     private commonService: CommonService,
-    private productService: ProductService
+    private productService: ProductService,
+    private wishListStore: WishListStore
   ) {
     super(translateConfigService, translateService, storageService);
     super.ngOnInit();
@@ -86,6 +88,7 @@ export class WishListComponent extends CommonBaseComponent implements OnInit {
         ...item
       }));
       this.wishListItems = Items;
+      this.wishListStore.set(this.wishListItems.length);
     });
   }
 

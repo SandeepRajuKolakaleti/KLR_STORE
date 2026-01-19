@@ -1,10 +1,15 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../../../../app/auth/services/auth/auth.service';
 import { CommonService } from '../../services/common/common.service';
 import { CategoryService } from 'src/app/categories/services/category.service';
 import { SubCategoryService } from 'src/app/categories/services/sub-category.service';
+import { CartStore } from '../../services/cart/cart.store.service';
+import { AddToCartService } from '../../../../app/product/services/add-to-cart/add-to-cart.service';
+import { WishListService } from '../../../../app/product/services/wish-list/wish-list.service';
+import { WishListStore } from '../../services/wish-list/wish-list.store.service';
+import { ProductService } from '../../../../app/dashboard/services/product/product.service';
 declare let $: any;
 
 @Component({
@@ -23,10 +28,28 @@ export class HeaderComponent implements AfterViewInit {
   electornicsSubCategories: any;
   gamesSubCategories: any;
   accessoriesSubCateogires: any;
+  addToCartItems: any[] = [];
+  cartItems = signal<any[]>([]);
+  subTotal = computed(() =>
+    this.cartItems().reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    )
+  );
   constructor(public router: Router, private authService: AuthService, private commonService: CommonService, 
     private categoryService: CategoryService,
-    private subCategoryService: SubCategoryService) { }
-
+    public cartStore: CartStore,
+    public wishListStore: WishListStore,
+    private productService: ProductService,
+    private addToCartService: AddToCartService,
+    private wishListService: WishListService,
+    private subCategoryService: SubCategoryService) {
+      effect(() => {
+        const count = this.cartStore.count(); // 👀 dependency tracking
+        this.loadAddtoCartCount(count);
+      });
+  }
+  
   ngAfterViewInit(): void {
     const isApiToken = localStorage.getItem('ApiToken');
     this.commonService.setAuthenticated(!!isApiToken);
@@ -34,6 +57,51 @@ export class HeaderComponent implements AfterViewInit {
       console.log('12345678', data)
       this.isLoggedIn = of(data);
       this.getAllCategories();
+      this.loadAddtoCartCount('');
+      this.loadWishListCount();
+    });
+  }
+
+  getProductsByIds(response: any) {
+    const productIds = response.data.map((item: any) => item.productId);
+    this.productService.getProductsByIds(productIds).subscribe((res: any) => {
+      console.log("Products fetched by IDs", res);
+      res.map((product: any) => {
+        const cartItem = response.data.find((item: any) => item.productId === product.Id);
+        if (cartItem) {
+          cartItem['ThumnailImage'] = product.ThumnailImage;
+        } else {
+          cartItem['ThumnailImage'] = 'assets/images/products/product-1.jpg';
+        }
+      });
+      this.getImgBase64(response);
+    });
+  }
+
+  getImgBase64(response: any) {
+    this.commonService.processImgToBase64(response.data).subscribe((products: any) => {
+      console.log(products);
+      this.addToCartItems = response.data.map((item: any, index: number) => ({
+        image: item.ThumnailImage || 'assets/images/products/product-1.jpg',
+        date: new Date(item.createdAt).toLocaleDateString(),
+        ...item
+      }));
+      this.cartItems.set(this.addToCartItems);
+    });
+  }
+
+  loadAddtoCartCount(count: any) {
+    this.addToCartService.getCartItems().subscribe((response: any) => {
+      console.log("Cart items loaded in header", response);
+      this.getProductsByIds(response);
+      const itemCount = response.data.reduce((acc: number, item: any) => acc + item.quantity, 0);
+      this.cartStore.set(itemCount);
+    });
+  }
+  loadWishListCount() {
+    this.wishListService.getWishList().subscribe((response: any) => {
+      console.log("Wishlist items loaded in header", response);
+      this.wishListStore.set(response.total);
     });
   }
 
