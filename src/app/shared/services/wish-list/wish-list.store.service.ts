@@ -4,7 +4,6 @@ import { computed, Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class WishListStore {
-  [x: string]: any;
   // source signal
   private readonly _count = signal<number>(0);
 
