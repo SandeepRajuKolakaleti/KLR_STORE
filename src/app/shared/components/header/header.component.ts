@@ -286,6 +286,7 @@ export class HeaderComponent implements AfterViewInit {
   signout() {
     console.log('signout');
     this.authService.setAuthenticated(false);
+    localStorage.clear();
     this.router.navigate(['login']);
   }
 
