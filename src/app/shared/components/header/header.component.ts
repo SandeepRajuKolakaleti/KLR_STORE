@@ -19,6 +19,7 @@ declare let $: any;
     standalone: false
 })
 export class HeaderComponent implements AfterViewInit {
+  logo: string = 'assets/imgs/KLR-logo.png';
   categories: any;
   firstCategories: any;
   secoundCategories: any;
