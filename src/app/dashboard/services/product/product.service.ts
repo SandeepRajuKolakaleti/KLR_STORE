@@ -42,6 +42,30 @@ export class ProductService {
     });
   }
 
+  getBestProducts() {
+    return this.http.get(environment.api.URL+`api/products/best-products`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  getNewArrivalProducts() {
+    return this.http.get(environment.api.URL+`api/products/new-arrival`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  getFeaturedProducts() {
+    return this.http.get(environment.api.URL+`api/products/featured-products`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  getTopProducts() {
+    return this.http.get(environment.api.URL+`api/products/top-products`, {
+      headers: this.getHeaders()
+    });
+  }
+
   getImageBase64(payload: any) {
     const url = environment.api.URL+ 'api/products/uploadImgToBase64';
     return this.http.post(url, payload, {

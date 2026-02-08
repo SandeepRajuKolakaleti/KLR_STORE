@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HomeComponent } from './components/home/home.component';
-import { CategoriesModule } from '../categories/categories.module';
+import { OrdersService } from '../product/services/orders/orders.service';
 
 
 
@@ -13,6 +13,7 @@ import { CategoriesModule } from '../categories/categories.module';
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
-  ]
+  ],
+  providers: [OrdersService]
 })
 export class DashboardModule { }

@@ -37,6 +37,12 @@ export class OrdersService {
     });
   }
 
+  getTopRecentSoldProductssByOrders() {
+    return this.http.get<any>(environment.api.URL+`api/orders/top-recent-products`, {
+      headers: this.getHeaders(),
+    });
+  }
+
   delete(orderId: number) {
     return this.http.delete<any>(environment.api.URL+`api/orders/delete/${orderId}`, {
       headers: this.getHeaders(),
