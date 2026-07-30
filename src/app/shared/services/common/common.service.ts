@@ -45,19 +45,21 @@ export class CommonService {
     this.isLoggedIn.set(value);
   }
 
-  loadScript(url: string) {
-    const script = document.createElement('script');
-    script.src = url;
-    script.addEventListener('load', function () {
-      // The script is loaded completely
+  loadScript(url: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = url;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error(`Failed to load script: ${url}`));
+      document.head.appendChild(script);
     });
-    document.head.appendChild(script);
   };
 
-  loadScriptsInOrder (arrayOfJs: string[]) {
-    arrayOfJs.map( (url) => {
-      return this.loadScript(url);
-    });
+  loadScriptsInOrder(arrayOfJs: string[]): Promise<void> {
+    return arrayOfJs.reduce(
+      (chain, url) => chain.then(() => this.loadScript(url)),
+      Promise.resolve()
+    );
   };
 
   setRightSideNavToggle(value: any) {

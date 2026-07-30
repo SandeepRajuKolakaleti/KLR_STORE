@@ -48,20 +48,21 @@
   <script src="https://www.paypal.com/sdk/js?client-id=AWv4wkv6VyTQWGgeIPhj5BehfF3CEnKVYWwS5kwI0QbkTkXFO12OU7kqbmXOCzdZK7SxVNjDq6nQeix8&currency=USD"></script>
   <script src="assets/js/client.js" async defer></script>
   <script type="text/javascript">
-    // Load a script from given `url`
+    // Load a script from given `url` and return a Promise
     const loadScript = function (url) {
-      const script = document.createElement('script');
-      script.src = url;
-      script.addEventListener('load', function () {
-        // The script is loaded completely
+      return new Promise(function (resolve, reject) {
+        const script = document.createElement('script');
+        script.src = url;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
       });
-      document.head.appendChild(script);
     };
-    // Load an array of scripts in order
+    // Load an array of scripts sequentially (each waits for the previous)
     const loadScriptsInOrder = function (arrayOfJs) {
-      arrayOfJs.map(function (url) {
-        return loadScript(url);
-      });
+      return arrayOfJs.reduce(function (chain, url) {
+        return chain.then(function () { return loadScript(url); });
+      }, Promise.resolve());
     };
     loadScriptsInOrder([
       '/assets/js/vendor/jquery-3.6.0.min.js',
