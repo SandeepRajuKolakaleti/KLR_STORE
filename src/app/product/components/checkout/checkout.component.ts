@@ -246,12 +246,25 @@ export class CheckoutComponent implements OnInit {
             }
           });
         },
+        modal: {
+          ondismiss: () => {
+            // Cancel callback
+            console.warn('Payment Cancelled by user');
+            this.onPaymentCancelled();
+          }
+        },
         theme: { color: '#3399cc' },
       };
       const rzp = new Razorpay(options);
       rzp.open();
     });
   }
+
+  onPaymentCancelled() {
+    // Show message or redirect
+    alert('Payment was cancelled.');
+  }
+
   payPal() {
     $('#paypal-button').empty();
       window.paypal.Buttons({
@@ -278,6 +291,10 @@ export class CheckoutComponent implements OnInit {
             this.snackBar.open('Payment Successful and Order Updated', 'Close', { duration: AppConstants.SNACK_BAR_DELAY.duration });
             this.router.navigate(['profile']);
           });
+        },
+        onCancel: () => {
+          console.log('OnCancel');
+          alert('Payment Cancelled');
         },
         onError: (err: any) => {
           console.error('Error occurred during PayPal payment:', err);
